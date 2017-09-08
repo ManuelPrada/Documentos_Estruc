@@ -1,0 +1,307 @@
+*ALGORITMO DE ORDENAMIENTO*(Bubblesort)
+
+
+Consiste en comparar pares de elementos adyacentes en un array y si están desordenanos
+ intercambiarlos hasta que estén todos ordenados.
+
+
+Si A es el array a ordenar, se realizan A.length-1 pasadas. Si la variable i es la que cuenta 
+el número de pasadas, en cada pasada i se comprueban los elementos adyacentes desde el primero
+hasta A.length-i-1 ya que el resto hasta el final del array están ya ordenados. Si los elementos adyacentes 
+están desordenados se intercambian.
+
+
+El método de ordenación de la burbuja en java para ordenar un array A es el siguiente:
+
+
+public static void burbuja(int [] A){
+
+         int i, j, aux;
+
+         for(i=0;i<A.length-1;i++)
+
+              for(j=0;j<A.length-i-1;j++)
+
+                   if(A[j+1]<A[j]){
+
+                      aux=A[j+1];
+
+                      A[j+1]=A[j];
+
+                      A[j]=aux;
+                   }
+}
+
+Ejemplo de ejecucion:
+
+|50|26|7|9|15|27| array original
+
+primera pasada:
+
+|26|.50.|7   |9   | 15 | 27 | Se intercambiian el 50 y el 26
+|26|  7 |.50.|9   | 15 | 27 | Se intercambiian el 50 y el 7 
+|26|  7 |  9 |.50.| 15 | 27 | Se intercambiian el 50 y el 9
+|26|  7 |  9 | 15 |.50.| 27 | Se intercambiian el 50 y el 15
+|26|  7 |  9 | 15 | 27 |.50.| Se intercambiian el 50 y el 27
+
+segunda pasada
+
+
+
+|7 |.26.| 9  | 15 | 27 | 50| Se intercambiian el 26 y el 7
+|7 |  9 |.26.| 15 | 27 | 50| Se intercambiian el 26 y el 9
+|7 |  9 |  9 |.26.| 27 | 50| Se intercambiian el 26 y el 9
+
+
+Ya están ordenados, pero los dos bucles for seguirán ejecutándose hasta el final.
+El tiempo de ejecución del algoritmo de la burbuja es del orden O(n2)
+Es uno de los peores algoritmos de ordenación en cuanto a tiempo de ejecución,
+solamente es recomendable su uso para ordenar listas con un número pequeño de elementos.
+
+
+*ORDENAMIENTO DE INSERCCIÓN*(insertion sort)
+
+ El método de ordenación por inserción directa consiste en recorrer todo el array comenzando 
+desde el segundo elemento hasta el final. Para cada elemento, se trata de colocarlo en el luga
+r correcto entre todos los elementos anteriores a él o sea entre los elementos a su izquierda en el array.
+Dada una posición actual p, el algoritmo se basa en que los elementos A[0], A[1], ..., A[p-1] ya están ordenados.
+
+De forma gráfica el proceso que sigue el método de inserción directa es el siguiente:
+
+
+
+|30| 15 |   2 | 21 | 44 | 8  | Array original
+
+|.30.|*15*| 2   |21   | 44 | 8 | Se empieza por el segundo elemento. Se compara con el primero.como 
+|*15*|.30.| 2   |21   | 44 | 8 | el 15<30 se desplaza el 30 hacia la derecha  y se coloca el 15 en su lugar.
+
+|.15|.30.| *2*  |21   | 44 | 8 | Seguimos por el tercer elemento. Se compara con los anteriores y se van desplazando 
+|*2*|.15.| .30. |21   | 44 | 8 | hasta que el 2 quede en su lugar.
+
+|.2. |.15.| .30. |*21* | 44 | 8 | Continuamos por el cuarto elemento.Se compara con los anteriores y se van 
+|.2.|.15.| *21*. |30.  | 44 | 8 | desplazando hasta que el numero  21 quede en su lugar.
+
+|.2.|.15.| .30.   |.21.   | *44* | 8 | Lo mismo para el quinto elemento 
+|.2.|.15.| .30.   |.21.   | .44. | 8 | en este caso ya esta en su posicion correcta respecto a las anteriores 
+
+|.2.|.15.| .21.   | .30.   | .44. | *8* | y final mente se coloca el ultimo elemento 
+|.2.|*8*| .15.   | .21.   | .30. | .44. | El array queda ordenado 
+
+ El método de Ordenamiento por inserción en Java es el siguiente:
+
+public static void insercionDirecta(int A[]){
+    int p, j;
+    int aux;
+    for (p = 1; p < A.length; p++){ // desde el segundo elemento hasta
+
+              aux = A[p]; // el final, guardamos el elemento y
+
+              j = p - 1; // empezamos a comprobar con el anterior
+
+              while ((j >= 0) && (aux < A[j])){ // mientras queden posiciones y el
+
+                                                                    // valor de aux sea menor que los
+                             A[j + 1] = A[j];       // de la izquierda, se desplaza a
+
+                             j--;                   // la derecha
+              }
+              A[j + 1] = aux; // colocamos aux en su sitio
+    }
+}
+
+
+En el peor de los casos, el tiempo de ejecución en O(n2).
+En el mejor caso (cuando el array ya estaba ordenado), el tiempo de ejecución de este método de ordenamiento es O(n).
+El caso medio dependerá de cómo están inicialmente distribuidos los elementos. Cuanto más ordenada 
+esté inicialmente más se acerca a O(n) y cuanto más desordenada, más se acerca a O(n2).
+El peor caso el método de inserción directa es igual que en los métodos de burbuja y selección, 
+pero el mejor caso podemos tener ahorros en tiempo de ejecución.
+
+
+
+
+*ORDENAMIENTO MEZCLA* (MergeSort)
+
+El método MergeSort es un algoritmo de ordenación recursivo con un número de comparaciones entre elementos del array mínimo.
+Su funcionamiento es similar al Quicksort, y está basado en la técnica divide y vencerás.
+De forma resumida el funcionamiento del método MergeSort es el siguiente:
+- Si la longitud del array es menor o igual a 1 entonces ya está ordenado.
+- El array a ordenar se divide en dos mitades de tamaño similar.
+- Cada mitad se ordena de forma recursiva aplicando el método MergeSort.
+- A continuación las dos mitades ya ordenadas se mezclan formando una secuencia ordenada.
+La ordenación mergesort se puede implementar en Java de la siguiente forma:
+public static void mergesort(int A[],int izq, int der){
+
+
+    if (izq<der){
+            int m=(izq+der)/2;
+            mergesort(A,izq, m);
+            mergesort(A,m+1, der);
+            merge(A,izq, m, der);
+    }
+}
+
+El método ordena un array A de enteros desde la posición izq hasta la posición der. 
+En la primera llamada al método recibirá los valores izq = 0, der = ELEMENTOS-1.
+Primero se calcula el elemento central m. A continuación la primera parte del array, 
+desde izq hasta m y la segunda parte del array, desde m+1 hasta der,
+se mezclan mediante llamadas recursivas al método mergesort.
+La recursión termina cuando izq == der, es decir, cuando un subarray
+contiene solamente un elemento.
+La operación principal de mezcla la realiza el método merge.
+Este método se puede implementar de varias formas, la más usual es la siguiente:
+
+
+public static void merge(int A[],int izq, int m, int der){
+   int i, j, k;
+   int [] B = new int[A.length]; //array auxiliar
+   for (i=izq; i<=der; i++) //copia ambas mitades en el array auxiliar
+             B[i]=A[i];
+
+             i=izq; j=m+1; k=izq;
+             while (i<=m && j<=der) //copia el siguiente elemento más grande
+             if (B[i]<=B[j])
+                     A[k++]=B[i++];
+             else
+                     A[k++]=B[j++];
+             while (i<=m) //copia los elementos que quedan de la
+                           A[k++]=B[i++]; //primera mitad (si los hay)
+ }
+De forma gráfica podemos representar el funcionamiento del algoritmo de la siguiente forma: 
+
+
+                                                 |8|0|3|-1|5|7|2|
+                                                    /    |    \
+
+                                            |8|0|3|-1|        |5|7|2|
+                                             /     \            /   \
+                                           |8|0|  |3|-1|     |5|7|  |2|
+                                            / \    /  \      /  \      \
+                                          |8| |0| |3| |-1|   |5| |7|   |2|
+                                             |       |         |        |
+                                           |0|8|   |-1|3|    |5|7|     |2|
+                                                 |                  |
+                                            |-1|0|3|8|           |2|5|7|
+                                                            |
+                                                    |-1|0|2|3|5|7|8|
+
+
+El tiempo de ejecución promedio del método MergeSort es O(n log n).
+
+
+
+*ORDENAMIENDO*  (Quicksort)
+
+ El método de ordenación Quicksort fue desarrollado por Hoare en el año 1960.
+Es el algoritmo de ordenación más rápido.
+Se basa en la técnica divide y vencerás, que consiste en ir subdividiendo el array en arrays más pequeños,
+ y ordenar éstos. Para hacer esta división, se toma un valor del array como pivote, y se mueven todos los elementos
+ menores que este pivote a su izquierda, y los mayores a su derecha. A continuación se aplica el mismo método a cada 
+una de las dos partes en las que queda dividido el array.
+Después de elegir el pivote se realizan dos búsquedas:
+Una de izquierda a derecha, buscando un elemento mayor que el pivote
+Otra de derecha a izquierda, buscando un elemento menor que el pivote.
+Cuando se han encontrado los dos elementos anteriores, se intercambian, y se sigue realizando la búsqueda hasta que las dos búsquedas se encuentran.
+La implementación del método de ordenación Quicksort es claramente recursiva.
+Suponiendo que tomamos como pivote el primer elemento, el método Java Quicksort que implementa
+este algoritmo de ordenación para ordenar un array de enteros se presenta a continuación. Los parámetros
+izq y der son el primer y último elemento del array a tratar en cada momento.
+El método ordena un array A d eenteros desde la posición izq hasta la posición der. En la primera
+llamada recibirá los valores izq = 0, der = ELEMENTOS-1.
+
+public static void quicksort(int A[], int izq, int der) {
+
+  int pivote=A[izq]; // tomamos primer elemento como pivote
+  int i=izq; // i realiza la búsqueda de izquierda a derecha
+  int j=der; // j realiza la búsqueda de derecha a izquierda
+  int aux;
+ 
+  while(i<j){            // mientras no se crucen las búsquedas
+     while(A[i]<=pivote && i<j) i++; // busca elemento mayor que pivote
+     while(A[j]>pivote) j--;         // busca elemento menor que pivote
+     if (i<j) {                      // si no se han cruzado                      
+         aux= A[i];                  // los intercambia
+         A[i]=A[j];
+         A[j]=aux;
+     }
+   }
+   A[izq]=A[j]; // se coloca el pivote en su lugar de forma que tendremos
+   A[j]=pivote; // los menores a su izquierda y los mayores a su derecha
+   if(izq<j-1)
+      quicksort(A,izq,j-1); // ordenamos subarray izquierdo
+   if(j+1 <der)
+      quicksort(A,j+1,der); // ordenamos subarray derecho
+
+ 
+
+ La elección del pivote determinará la eficiencia de este algoritmo ya que determina la partición del array. 
+Si consideramos que el array está desordenado, podemos elegir el primer elemento y el algoritmo funcionaría de
+ forma eficiente. Pero si el array está casi ordenado, elegir el primer elemento como pivote sería una mala solución
+ ya que obtendríamos un subarray muy pequeño y otro muy grande. Por la misma razón, elegir el último elemento del array 
+como pivote también es una mala idea. Pretendemos conseguir que el tamaño de los subarrays sea lo más parecido posible.
+
+Una alternativa a elegir el primer elemento es elegir como pivote un elemento al azar de entre todos los del array.
+Otra estrategia es calcular la mediana de los valores de la izquierda, centro y derecha del vector.
+Por ejemplo para el vector: 9 8 1 6 10 2 3, se calcula la mediana de los elementos que ocupan el primer lugar,
+ el último y el centro o sea 9 3 6. La mediana es 6 que determinaría las particiones {1 3 2} {6} {8 10 9}.
+
+En el peor caso, cuando el pivote es el elemento menor del array el tiempo de ejecución del método Quicksort es O(n2).
+En general el tiempo medio de ejecución del Quicksort es O(n log n).
+
+
+
+
+
+Algoritmos de ordenamiento y su complejidad
+Algoritmo                                                Complejidad                                 Método
+Ordenamiento de burbuja                                  O(n^2)                                     Intercambio
+Ordenamiento de Inserción                                O(n^2)                                      Inserción
+ORDENAMIENTO MEZCLA                                      O(n log n)                                  partición
+Ordenamiento rápido(Quicksort)                           Promedio: O(n Log n)                        Partición
+                                                         Peor caso: O(n^2)   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
